@@ -1,4 +1,4 @@
-from Ferramentas.Char import char
+from Char import char
 
 
 def trocarSTR(mensagem, d1 = 'l', d2 = 'n'):
@@ -65,6 +65,3 @@ def resetar(mensagem):
     mensagem = trocarN(mensagem,'l','n')
 
     return mensagem
-
-print(tratar('Delta11 Δ'))
-print(resetar(tratar('Delta11 Δ')))
