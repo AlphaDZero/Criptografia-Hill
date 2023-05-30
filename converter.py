@@ -1,38 +1,70 @@
 from Ferramentas.Char import char
 
-def converter(mensagem, numero = 1):
-    if numero == 1:
 
-        #se na mensagem tiver um numero, o mesmo sera convertido na forma escrita
-        for valor in range(0,10):
-            mensagem = mensagem.replace(char()['numero']['n'][valor], char()['numero']['l'][valor])
-
-        #caso tiver um digito que saia do limite de Char() será substituido por '?'
-        for valor in mensagem:
-            if valor not in char()['digito']['l']:
-                mensagem = mensagem.replace(valor, '?')
-
-        #converter uma string em lista de digitos
-        matriz = []
-        for valor in mensagem:
-            matriz.append(valor)     
-        mensagem = matriz.copy()
-        matriz.clear()
-
-        #converter as letras e simbolos para numeros em string
-        for cont, elemento in enumerate(mensagem):
-            for enum, valor in enumerate(char()['digito']['l']):
-                if elemento == valor:
-                    mensagem[cont] = elemento.replace(elemento, char()['digito']['n'][enum])
-                    break
-        
-        #verificar se a lista é par, caso contrario ira adicionar um espaço
-
-        #Transformar em uma matriz com 2 linhas e seus elementos em inteiros
-    
-    else:
-        pass
-    
+def trocarSTR(mensagem, d1 = 'l', d2 = 'n'):
+    #converter as letras e simbolos para numeros em string
+    for cont, elemento in enumerate(mensagem):
+        for enum, valor in enumerate(char()['digito'][d1]):
+            if elemento == valor:
+                mensagem[cont] = elemento.replace(elemento, char()['digito'][d2][enum])
+                break
     return mensagem
 
-print(converter('Delta11Δ'))
+
+def trocarN(mensagem, d1 = 'n', d2 ='l'):
+    #se na mensagem tiver um numero, o mesmo sera convertido na forma escrita
+    #se d1 e d2 for trocado fará o contrario
+    for valor in range(0,10):
+        mensagem = mensagem.replace(char()['numero'][d1][valor], char()['numero'][d2][valor])
+    return mensagem
+
+
+def tratar(mensagem):
+    #se na mensagem tiver um numero, o mesmo sera convertido na forma escrita
+    mensagem = trocarN(mensagem)
+
+    #caso tiver um digito que saia do limite de Char() será substituido por '?'
+    for valor in mensagem:
+        if valor not in char()['digito']['l']:
+            mensagem = mensagem.replace(valor, '?')
+
+    #converter uma string em lista de digitos
+    mensagem = [v for v in mensagem]
+
+    #verificar se a lista é impar para adicionar um espaço para virar par
+    if len(mensagem)%2!=0:
+        mensagem.append(' ')
+
+    #converter as letras e simbolos para numeros em string
+    mensagem = trocarSTR(mensagem).copy()
+
+    #Transformar em uma matriz com 2 linhas e seus elementos em inteiros
+    mensagem = [[int(v) for v in mensagem[0:int(len(mensagem)/2)]], [int(v) for v in mensagem[(int(len(mensagem)/2))::]]]
+
+    return mensagem
+
+
+def resetar(mensagem):
+    #transformar uma matriz em uma lista de elementos string(int)
+    matriz = []
+    for valor in mensagem:
+        for elemento in valor:
+            matriz.append(str(elemento))
+    mensagem = matriz.copy()
+
+    #converter os numeros para letras e simbolos
+    mensagem = trocarSTR(mensagem,'n','l').copy()
+
+    #transformar a lista em string
+    msg =''
+    for valor in mensagem:
+        msg += valor
+    mensagem = msg.strip()
+
+    #os numeros escritos será convertidos em inteiros
+    mensagem = trocarN(mensagem,'l','n')
+
+    return mensagem
+
+print(tratar('Delta11 Δ'))
+print(resetar(tratar('Delta11 Δ')))
