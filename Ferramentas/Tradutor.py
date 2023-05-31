@@ -1,4 +1,4 @@
-from Char import char
+from Ferramentas.Char import char
 
 
 def trocarSTR(mensagem, d1 = 'l', d2 = 'n'):

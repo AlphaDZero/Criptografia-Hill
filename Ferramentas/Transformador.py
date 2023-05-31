@@ -1,9 +1,6 @@
-from Tradutor import tratar, resetar
-from variavel import msg
+from Ferramentas.Tradutor import tratar, resetar
 
 def conversor(mensagem,reset = False):
     if reset:
         return resetar(mensagem)
     return tratar(mensagem)
-
-print(conversor(conversor(msg), True))
