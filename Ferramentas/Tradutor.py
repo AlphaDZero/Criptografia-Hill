@@ -2,13 +2,15 @@ from Char import char
 
 
 def trocarSTR(mensagem, d1 = 'l', d2 = 'n'):
-    #converter as letras e simbolos para numeros em string
-    for cont, elemento in enumerate(mensagem):
-        for enum, valor in enumerate(char()['digito'][d1]):
-            if elemento == valor:
-                mensagem[cont] = elemento.replace(elemento, char()['digito'][d2][enum])
-                break
-    return mensagem
+    #converter as letras e simbolos para numeros em string de forma otimizada
+    soma = 0
+    for pos, valor in enumerate(char()['digito'][d1]):
+        repetir = mensagem.count(valor)
+        for d in range(0, repetir):
+            mensagem[mensagem.index(valor)] = char()['digito'][d2][pos]
+        soma += repetir
+        if soma == len(mensagem):
+            return mensagem
 
 
 def trocarN(mensagem, d1 = 'n', d2 ='l'):

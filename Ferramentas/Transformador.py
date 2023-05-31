@@ -4,3 +4,5 @@ def conversor(mensagem,reset = False):
     if reset:
         return resetar(mensagem)
     return tratar(mensagem)
+
+print(conversor(conversor('Hello World!'), True))
